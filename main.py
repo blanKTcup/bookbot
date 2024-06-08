@@ -4,6 +4,7 @@ def main():
   word_count = get_num_words(book_text)
   letter_count_dict_unordered = get_num_chars(book_text)
   letter_counts_ordered = convert_dict_to_sorted_list(letter_count_dict_unordered)
+
   print(f"--- Begin report of {book_path} ---")
   print(f"{word_count} words found in the document")
   print(" ")
@@ -22,23 +23,24 @@ def get_num_chars(book_text):
   lowercase_text = book_text.lower() # make book text all lowercase
   letter_count_dict_unordered = {}
   for char in lowercase_text:
-    if char.isalpha() == True: # exclude all characters that are not letters
-      if char not in letter_count_dict_unordered:
+    if not char.isalpha(): # exclude all characters that are not letters
+      continue
+    if char not in letter_count_dict_unordered:
         letter_count_dict_unordered[char] = 1
-      else:
-        letter_count_dict_unordered[char] += 1
+    else:
+      letter_count_dict_unordered[char] += 1
   return letter_count_dict_unordered
 
-def sort_on(letter_count_dict_unordered):
-  letter_dict_key = next(iter(letter_count_dict_unordered))
-  letter_dict_value = letter_count_dict_unordered[letter_dict_key]
-  return letter_dict_value
+def sort_on(d):
+  d_key = next(iter(d))
+  d_value = d[d_key]
+  return d_value
 
 def convert_dict_to_sorted_list(letter_count_dict_unordered):
   letter_count_list_ordered = []
   for letter in letter_count_dict_unordered: 
     letter_item = {} # separate each key, value into its own dictionary
-    letter_item[letter] = letter_count_dict_unordered[letter]
+    letter_item[letter] = letter_count_dict_unordered[letter] # new singular dict = value from item in previous whole dict
     letter_count_list_ordered.append(letter_item) # append each separate dictionary to a new list of key,value dictionaries
   letter_count_list_ordered.sort(reverse=True, key=sort_on)
   return letter_count_list_ordered
