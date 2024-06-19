@@ -1,1 +1,1 @@
-Boot.dev Bookbot project
+Boot.dev Bookbot simple python project
